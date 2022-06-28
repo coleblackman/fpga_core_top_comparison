@@ -46,6 +46,7 @@ def find_all(a_str, sub):
         yield start
         start += len(sub)
 print("---------------------------------------")
+# Uses prog_clk as indicator of module
 for top_word in find_all(top_data, "prog_clk"):
     if(everyOther): # skip (prog_clk)
         if(verbose):
@@ -53,37 +54,48 @@ for top_word in find_all(top_data, "prog_clk"):
         totalNumberModules+=1
     everyOther = not everyOther
 
-print('Total number of fpga_top modules: ', totalNumberModules)
+# fpga_core.v uses clk_0_E
+coreNumberModules = 0
+for core_word in find_all(core_data, "(\n    ."):
+    if(verbose):
+        print(core_data[core_word-30:core_word-2])
+    coreNumberModules+=1
+#for core_word in find_all(core_data, "clk_0_E")
+  #  if(verbose):
+   #     print(core_data[core_word-30:core_word-2])
+  #  coreNumberModules+=1
+
+print('Total number of fpga_top modules: \033[1;32m', totalNumberModules)
+print('\033[mTotal number of fpga_core modules: \033[1;32m', coreNumberModules)
+
 
 # Print number of wires
-print('Number of wires in fpga_core: ', core_occurences_of_wire)
-print('Number of wires in fpga_top.v:', top_occurences_of_wire)
-print('\nNumber of inputs in fpga_top.v: ', top_occurences_of_input)
-print('Number of inputs in fpga_core.v: ', core_occurences_of_input)
-print('\nNumber of outputs in fpga_top.v: ', top_occurences_of_output)
-print('Number of outputs in fpga_core.v: ', core_occurences_of_output)
+print('\033[mNumber of wires in fpga_core: \033[1;32m', core_occurences_of_wire)
+print('\033[mNumber of wires in fpga_top.v:\033[1;32m', top_occurences_of_wire)
+print('\033[m\nNumber of inputs in fpga_top.v: \033[1;32m', top_occurences_of_input)
+print('\033[mNumber of inputs in fpga_core.v: \033[1;32m', core_occurences_of_input)
+print('\033[m\nNumber of outputs in fpga_top.v: \033[1;32m', top_occurences_of_output)
+print('\033[mNumber of outputs in fpga_core.v: \033[1;32m', core_occurences_of_output)
 
 # Find instances of CLBs, SBs, etc:
 
 # First, SBs:
 
-print('Occurrences in fpga_top.v of sb_0__0_ sb: ', top_data.count("sb_0__0_ sb"))
-print('Occurrences in fpga_top.v of sb_1__0_ sb: ', top_data.count("sb_1__0_ sb"))
-print('Occurrences in fpga_top.v of sb_0__1_ sb: ', top_data.count("sb_0__1_ sb"))
-print('Occurrences in fpga_top.v of sb_2__0 sb: ', top_data.count("sb_2__0_ sb"))
-print('Occurrences in fpga_top.v of sb_2__1 sb: ', top_data.count("sb_2__1_ sb"))
-print('Occurrences in fpga_top.v of sb_2__2 sb: ', top_data.count("sb_2__2_ sb"))
-print('Occurrences in fpga_top.v of sb_1__2 sb: ', top_data.count("sb_1__2_ sb"))
-print('Occurrences in fpga_top.v of sb_0__2 sb: ', top_data.count("sb_0__2_ sb"))
+print('\033[mOccurrences in fpga_top.v of sb_0__0_ sb: \033[1;32m', top_data.count("sb_0__0_ sb"))
+print('\033[mOccurrences in fpga_top.v of sb_1__0_ sb: \033[1;32m', top_data.count("sb_1__0_ sb"))
+print('\033[mOccurrences in fpga_top.v of sb_0__1_ sb: \033[1;32m', top_data.count("sb_0__1_ sb"))
+print('\033[mOccurrences in fpga_top.v of sb_2__0 sb: \033[1;32m', top_data.count("sb_2__0_ sb"))
+print('\033[mOccurrences in fpga_top.v of sb_2__1 sb: \033[1;32m', top_data.count("sb_2__1_ sb"))
+print('\033[mOccurrences in fpga_top.v of sb_2__2 sb: \033[1;32m', top_data.count("sb_2__2_ sb"))
+print('\033[mOccurrences in fpga_top.v of sb_1__2 sb: \033[1;32m', top_data.count("sb_1__2_ sb"))
+print('\033[mOccurrences in fpga_top.v of sb_0__2 sb: \033[1;32m', top_data.count("sb_0__2_ sb"))
 
 
-print('\nOccurrences in fpga_core.v of sb_0__0_ sb: ', core_data.count("sb_0__0_\n  sb_0__0_"))
-print('Occurrences in fpga_core.v of sb_1__0_ sb: ', core_data.count("sb_1__0_\n  sb_1__0_"))
-print('Occurrences in fpga_core.v of sb_0__1_ sb: ', core_data.count("sb_0__1_\n  sb_0__1_"))
-print('Occurrences in fpga_core.v of sb_2__0 sb: ', core_data.count("sb_2__0_\n  sb_2__0_"))
-print('Occurrences in fpga_core.v of sb_2__1 sb: ', core_data.count("sb_2__1_\n  sb_2__1_"))
-print('Occurrences in fpga_core.v of sb_2__2 sb: ', core_data.count("sb_2__2_\n  sb_2__2_"))
-print('Occurrences in fpga_core.v of sb_1__2 sb: ', core_data.count("sb_1__2_\n  sb_1__2_"))
-print('Occurrences in fpga_core.v of sb_0__2 sb: ', core_data.count("sb_0__2_\n  sb_0__2_"))
-
-
+print('\033[m\nOccurrences in fpga_core.v of sb_0__0_ sb: \033[1;32m', core_data.count("sb_0__0_\n  sb_0__0_"))
+print('\033[mOccurrences in fpga_core.v of sb_1__0_ sb: \033[1;32m', core_data.count("sb_1__0_\n  sb_1__0_"))
+print('\033[mOccurrences in fpga_core.v of sb_0__1_ sb: \033[1;32m', core_data.count("sb_0__1_\n  sb_0__1_"))
+print('\033[mOccurrences in fpga_core.v of sb_2__0 sb: \033[1;32m', core_data.count("sb_2__0_\n  sb_2__0_"))
+print('\033[mOccurrences in fpga_core.v of sb_2__1 sb: \033[1;32m', core_data.count("sb_2__1_\n  sb_2__1_"))
+print('\033[mOccurrences in fpga_core.v of sb_2__2 sb: \033[1;32m', core_data.count("sb_2__2_\n  sb_2__2_"))
+print('\033[mOccurrences in fpga_core.v of sb_1__2 sb: \033[1;32m', core_data.count("sb_1__2_\n  sb_1__2_"))
+print('\033[mOccurrences in fpga_core.v of sb_0__2 sb: \033[1;32m', core_data.count("sb_0__2_\n  sb_0__2_"))
